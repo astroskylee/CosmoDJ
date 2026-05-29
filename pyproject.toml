@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "CosmoDJ"
+version = "0.0.1"
+description = "Lightweight cosmological distance utilities for lensing forecasts."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Tian Li" }
+]
+dependencies = [
+    "astropy>=6",
+    "jax>=0.4",
+    "numpy>=1.23"
+]
+
+[project.optional-dependencies]
+test = [
+    "numpyro>=0.15",
+    "pytest>=7"
+]
+
+[project.urls]
+Homepage = "https://github.com/astroskylee/CosmoDJ"
+Repository = "https://github.com/astroskylee/CosmoDJ"
+Issues = "https://github.com/astroskylee/CosmoDJ/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
