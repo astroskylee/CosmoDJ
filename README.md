@@ -9,7 +9,7 @@ The default cosmology is `Planck18Cosmology`, implemented as a CosmoDJ parameter
 For local development:
 
 ```bash
-cd /mnt/d/lensing/Package_Tian/CosmoDJ
+cd /yourpath
 pip install -e .
 ```
 
@@ -84,30 +84,6 @@ def model():
     numpyro.sample("Da_obs", dist.Normal(Da, 20.0), obs=jnp.array([1250.0, 1650.0]))
 ```
 
-## JIT Example
-
-```python
-import jax
-import jax.numpy as jnp
-
-from cosmodj import angular_diameter_distance
-
-z = jnp.linspace(0.1, 5.0, 100)
-Da = jax.jit(angular_diameter_distance)(z)
-```
-
-## Validation
-
-The Planck18 implementation includes photon and neutrino density terms, including the massive-neutrino fitting formula used by Astropy. In the current test suite, CosmoDJ agrees with Astropy Planck18 at approximately machine precision for `E(z)`, `nu_relative_density(z)`, and angular-diameter distances over random redshifts in `0 < z < 5`.
-
-Example validation result:
-
-```text
-Da max_rel ~ 4e-15
-E(z) max_rel ~ 2e-16
-nu_relative_density max_rel = 0
-```
-
 ## Citation
 
 If you use this package in a publication, please cite:
@@ -131,4 +107,3 @@ archivePrefix = {arXiv},
       adsnote = {Provided by the SAO/NASA Astrophysics Data System}
 }
 ```
-
