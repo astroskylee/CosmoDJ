@@ -1,5 +1,8 @@
+# Authors: Tian Li, Coleman Krawczyk, Wolfgang Enzi, Andy Lundgren
+
 """Cosmological distance utilities."""
 
+from . import tools
 from .distances import (
     Cosmology,
     Planck18Cosmology,
@@ -29,5 +32,6 @@ __all__ = [
     "luminosity_distance",
     "nu_relative_density",
     "time_delay_distance",
+    "tools",
     "transverse_comoving_distance",
 ]

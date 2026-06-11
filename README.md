@@ -28,6 +28,16 @@ Da = angular_diameter_distance(1.0)          # Mpc, default Planck18Cosmology
 Dl, Ds, Dls = angular_diameter_distances(0.5, 2.0)  # Mpc
 ```
 
+For older SLCOSMO-style code, the same lensing distances are also available
+under the `tools` namespace:
+
+```python
+import cosmodj
+
+Dl, Ds, Dls = cosmodj.tools.dldsdls(0.5, 2.0, cosmology, n=20)
+Dl, Ds, Dls = cosmodj.tools.dldsdlsdldsdls(0.5, 2.0, cosmology, n=20)
+```
+
 `angular_diameter_distance` accepts scalar or array-like redshifts:
 
 ```python

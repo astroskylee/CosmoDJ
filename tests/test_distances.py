@@ -1,3 +1,5 @@
+# Authors: Tian Li, Coleman Krawczyk, Wolfgang Enzi, Andy Lundgren
+
 import numpy as np
 import jax
 import jax.numpy as jnp
@@ -5,6 +7,7 @@ import numpyro
 import numpyro.distributions as dist
 from numpyro.infer.util import log_density
 from astropy.cosmology import Planck18 as AstropyPlanck18
+import cosmodj
 
 from cosmodj import (
     Cosmology,
@@ -63,6 +66,15 @@ def test_lensing_distances_are_ordered_for_typical_lens():
     assert dl > 0.0
     assert ds > 0.0
     assert dls > 0.0
+
+
+def test_tools_namespace_exposes_legacy_lensing_distance_aliases():
+    cosmo = {"Omegam": 0.32, "Omegak": 0.0, "w0": -1.0, "wa": 0.0, "h0": 70.0}
+    expected = angular_diameter_distances(0.5, 2.0, cosmo, n=20)
+
+    np.testing.assert_allclose(cosmodj.tools.dldsdls(0.5, 2.0, cosmo, n=20), expected)
+    np.testing.assert_allclose(cosmodj.tools.dldsdlsdldsdls(0.5, 2.0, cosmo, n=20), expected)
+    np.testing.assert_allclose(cosmodj.tools.tool.dldsdls(0.5, 2.0, cosmo, n=20), expected)
 
 
 def test_default_distances_are_jittable():

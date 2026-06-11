@@ -1,3 +1,5 @@
+# Authors: Tian Li, Coleman Krawczyk, Wolfgang Enzi, Andy Lundgren
+
 """Numerical integration helpers."""
 
 from __future__ import annotations

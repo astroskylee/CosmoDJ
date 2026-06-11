@@ -1,3 +1,5 @@
+# Authors: Tian Li, Coleman Krawczyk, Wolfgang Enzi, Andy Lundgren
+
 """JAX cosmological distance calculations.
 
 Distances use the CPL dark-energy parameterization,
