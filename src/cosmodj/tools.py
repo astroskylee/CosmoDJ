@@ -53,17 +53,6 @@ def dldsdls(
     return _angular_diameter_distances(zl, zs, cosmology, n=n)
 
 
-def dldsdlsdldsdls(
-    zl,
-    zs,
-    cosmology: Cosmology | Mapping[str, float] | None = None,
-    n: int = 20,
-):
-    """Alias for :func:`dldsdls` matching the requested alternative name."""
-
-    return dldsdls(zl, zs, cosmology, n=n)
-
-
 def time_delay_distance(
     zl,
     zs,
@@ -99,7 +88,6 @@ class tool:
 
     angular_diameter_distance = staticmethod(angular_diameter_distance)
     dldsdls = staticmethod(dldsdls)
-    dldsdlsdldsdls = staticmethod(dldsdlsdldsdls)
     time_delay_distance = staticmethod(time_delay_distance)
     compute_distances = staticmethod(compute_distances)
 
@@ -109,7 +97,6 @@ __all__ = [
     "angular_diameter_distance",
     "compute_distances",
     "dldsdls",
-    "dldsdlsdldsdls",
     "time_delay_distance",
     "tool",
 ]

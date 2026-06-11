@@ -34,8 +34,52 @@ under the `tools` namespace:
 ```python
 import cosmodj
 
+cosmology = {"Omegam": 0.32, "Omegak": 0.0, "w0": -1.0, "wa": 0.0, "h0": 70.0}
 Dl, Ds, Dls = cosmodj.tools.dldsdls(0.5, 2.0, cosmology, n=20)
-Dl, Ds, Dls = cosmodj.tools.dldsdlsdldsdls(0.5, 2.0, cosmology, n=20)
+```
+
+In the SLCOSMO workflow, `cosmology` was a dictionary built by
+`SLmodel.cosmology_model`. A minimal version of that pattern is:
+
+```python
+import numpyro
+import numpyro.distributions as dist
+
+
+def cosmology_model(cosmology_type, cosmo_prior, sample_h0=False):
+    cosmology = {
+        "Omegam": numpyro.sample(
+            "Omegam", dist.Uniform(cosmo_prior["omegam_low"], cosmo_prior["omegam_up"])
+        ),
+        "Omegak": 0.0,
+        "w0": -1.0,
+        "wa": 0.0,
+        "h0": 70.0,  # historical SLCOSMO name for H0 in km/s/Mpc
+    }
+
+    if cosmology_type == "wcdm":
+        cosmology["w0"] = numpyro.sample("w0", dist.Uniform(cosmo_prior["w0_low"], cosmo_prior["w0_up"]))
+    elif cosmology_type == "owcdm":
+        cosmology["Omegak"] = numpyro.sample(
+            "Omegak", dist.Uniform(cosmo_prior["omegak_low"], cosmo_prior["omegak_up"])
+        )
+        cosmology["w0"] = numpyro.sample("w0", dist.Uniform(cosmo_prior["w0_low"], cosmo_prior["w0_up"]))
+    elif cosmology_type == "waw0cdm":
+        cosmology["w0"] = numpyro.sample("w0", dist.Uniform(cosmo_prior["w0_low"], cosmo_prior["w0_up"]))
+        cosmology["wa"] = numpyro.sample("wa", dist.Uniform(cosmo_prior["wa_low"], cosmo_prior["wa_up"]))
+    elif cosmology_type == "owaw0cdm":
+        cosmology["Omegak"] = numpyro.sample(
+            "Omegak", dist.Uniform(cosmo_prior["omegak_low"], cosmo_prior["omegak_up"])
+        )
+        cosmology["w0"] = numpyro.sample("w0", dist.Uniform(cosmo_prior["w0_low"], cosmo_prior["w0_up"]))
+        cosmology["wa"] = numpyro.sample("wa", dist.Uniform(cosmo_prior["wa_low"], cosmo_prior["wa_up"]))
+    elif cosmology_type != "lambdacdm":
+        raise ValueError("Unknown cosmology_type")
+
+    if sample_h0:
+        cosmology["h0"] = numpyro.sample("h0", dist.Uniform(cosmo_prior["h0_low"], cosmo_prior["h0_up"]))
+
+    return cosmology
 ```
 
 `angular_diameter_distance` accepts scalar or array-like redshifts:

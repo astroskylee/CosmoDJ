@@ -73,7 +73,6 @@ def test_tools_namespace_exposes_legacy_lensing_distance_aliases():
     expected = angular_diameter_distances(0.5, 2.0, cosmo, n=20)
 
     np.testing.assert_allclose(cosmodj.tools.dldsdls(0.5, 2.0, cosmo, n=20), expected)
-    np.testing.assert_allclose(cosmodj.tools.dldsdlsdldsdls(0.5, 2.0, cosmo, n=20), expected)
     np.testing.assert_allclose(cosmodj.tools.tool.dldsdls(0.5, 2.0, cosmo, n=20), expected)
 
 
